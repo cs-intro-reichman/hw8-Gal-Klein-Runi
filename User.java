@@ -61,6 +61,7 @@ public class User {
         }
         return false;
     }
+    
 
     /**
      * Makes this user follow the given name. If successful, returns true.
