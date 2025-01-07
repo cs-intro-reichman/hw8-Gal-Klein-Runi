@@ -51,9 +51,10 @@ public class User {
      */
     public boolean follows(String name) {
         //// Replace the following statement with your code
+        String nameL = name.toLowerCase();
         String[] follows = this.getfFollows();
         for (int i = 0; i < this.getfCount(); i++) {
-            if (follows[i].equals(name)) {
+            if (follows[i].toLowerCase().equals(nameL)) {
                 return true;
             }
 
