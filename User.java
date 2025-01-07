@@ -52,7 +52,7 @@ public class User {
     public boolean follows(String name) {
         //// Replace the following statement with your code
         String[] follows = this.getfFollows();
-        for (int i = 0; i < follows.length; i++) {
+        for (int i = 0; i < this.getfCount(); i++) {
             if (follows[i].equals(name)) {
                 return true;
             }
@@ -72,7 +72,7 @@ public class User {
         if (fCount < maxfCount) {
             if (this.follows(name) == false) {
                 follows[fCount] = name;
-                fCount += 1;
+                fCount++;
 
             }
         }
@@ -100,6 +100,7 @@ public class User {
             for (int i = foundIndex; i < fCount - 1; i++) {
                 follows[i] = follows[i + 1];
             }
+
 
             follows[fCount - 1] = null;
             fCount--;
