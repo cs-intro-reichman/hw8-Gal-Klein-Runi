@@ -40,7 +40,7 @@ public class Network {
         //// Replace the following statement with your code
         for (int i = 0; i < userCount; i++) {
             User user = users[i];
-            if (user.getName() == name) {
+            if (user.getName().toLowerCase() == name.toLowerCase()) {
                 return user;
             }
         }
@@ -77,6 +77,9 @@ public class Network {
      * or if the "follows" addition failed for some reason, returns false.
      */
     public boolean addFollowee(String name1, String name2) {
+        if (name1.toLowerCase().equals(name2.toLowerCase())) {
+            return false;
+        }
         //// Replace the following statement with your code
         User user1 = getUser(name1);
         User user2 = getUser(name2);
@@ -119,13 +122,19 @@ public class Network {
      * The user who appears the most in the follow lists of all the users.
      */
     public String mostPopularUser() {
-        int[] usersCount = new int[users.length];
-
+        if (userCount==0) {
+            return "";
+        }
+        int[] usersCount = new int[userCount];
+        
         for (int i = 0; i < users.length; i++) {
             String currentUser = users[i].getName();
+            if (currentUser == null) {
+                continue; 
+            }
             int c = 0;
             for (int j = 0; j < userCount; j++) {
-                if (i != j) {
+                if (i != j && users[j] != null) {
                     String[] userFollowers = users[j].getfFollows();
                     for (int t = 0; t < users[j].getfCount(); t++) {
                         if (userFollowers[t] != null && userFollowers[t].equals(currentUser)) {
@@ -178,9 +187,11 @@ public class Network {
     public String toString() {
         //// Replace the following statement with your code
 
-        String ans = "Network:";
+        String ans = "Network:\n";
         for (int i = 0; i < userCount; i++) {
-            ans = ans + users[i].toString() + " ";
+            if (users[i] != null) { 
+                ans = ans + users[i].toString() + "\n"; 
+            }
         }
         return ans;
     }
