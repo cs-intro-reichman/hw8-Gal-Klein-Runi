@@ -116,17 +116,16 @@ public class User {
      */
     public int countMutual(User other) {
         //// Replace the following statement with your code
-        int c = 0;
-       
+        int mutualCount = 0;
+        int count = this.getfCount();
         String[] follows = this.getfFollows();
-        for (int i=0; i<this.getfCount(); i++) {
-            if (other.follows(follows[i])) {
-                c++;
+        for (int i = 0; i < count; i++) {
+            if (follows[i] != null && other.follows(follows[i])) {
+                mutualCount++;
             }
         }
-        return c;
+        return mutualCount;
     }
-
     /**
      * Checks is this user is a friend of the other user.
      * (if two users follow each other, they are said to be "friends.")
