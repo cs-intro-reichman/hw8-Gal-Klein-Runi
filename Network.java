@@ -38,7 +38,7 @@ public class Network {
      */
     public User getUser(String name) {
         //// Replace the following statement with your code
-        for (int i = 0; i < users.length; i++) {
+        for (int i = 0; i < userCount; i++) {
             User user = users[i];
             if (user.getName() == name) {
                 return user;
@@ -57,16 +57,17 @@ public class Network {
      */
     public boolean addUser(String name) {
         //// Replace the following statement with your code
-
-        if (userCount < users.length) {
-            if (this.getUser(name) == null) {
-                users[userCount] = new User(name);
-                userCount += 1;
-            }
-            return true;
+        if (userCount >= users.length) {
+            return false;
         }
 
-        return false;
+        if (getUser(name) != null) {
+            return false; 
+        }
+    
+        users[userCount] = new User(name);
+        userCount++;
+        return true;
     }
 
     /**
@@ -80,7 +81,7 @@ public class Network {
         User user1 = getUser(name1);
         User user2 = getUser(name2);
 
-        if ((user1 != null) & (user2 != null)) {
+        if ((user1 != null) && (user2 != null)) {
             return user1.addFollowee(name2);
         }
 
@@ -98,9 +99,9 @@ public class Network {
         int maxMutual = 0;
         String maxName = "";
         User mainUser = this.getUser(name);
-        for (int i = 0; i < users.length; i++) {
+        for (int i = 0; i < userCount; i++) {
             User user = users[i];
-            if (user.getName() != name) {
+            if (!user.getName().toLowerCase().equals(name.toLowerCase())) {
                 int cMutual = mainUser.countMutual(user);
                 if (maxMutual < cMutual) {
                     maxMutual = cMutual;
@@ -123,11 +124,11 @@ public class Network {
         for (int i = 0; i < users.length; i++) {
             String currentUser = users[i].getName();
             int c = 0;
-            for (int j = 0; j < users.length; j++) {
+            for (int j = 0; j < userCount; j++) {
                 if (i != j) {
                     String[] userFollowers = users[j].getfFollows();
                     for (int t = 0; t < users[j].getfCount(); t++) {
-                        if (userFollowers[t] == currentUser) {
+                        if (userFollowers[t] != null && userFollowers[t].equals(currentUser)) {
                             c++;
                             break;
                         }
@@ -140,7 +141,7 @@ public class Network {
         }
         int maxIndex = -1;
         int maxC = 0;
-        for (int i = 0; i < users.length; i++) {
+        for (int i = 0; i < userCount; i++) {
             if (usersCount[i] > maxC) {
                 maxIndex = i;
                 maxC = usersCount[i];
