@@ -62,9 +62,9 @@ public class Network {
         }
 
         if (getUser(name) != null) {
-            return false; 
+            return false;
         }
-    
+
         users[userCount] = new User(name);
         userCount++;
         return true;
@@ -158,11 +158,11 @@ public class Network {
      */
     private int followeeCount(String name) {
         int c = 0;
-        for (int j = 0; j < users.length; j++) {
-            if (users[j].getName() != name) {
+        for (int j = 0; j < userCount; j++) {
+            if (!users[j].getName().equals(name)) {
                 String[] userFollowers = users[j].getfFollows();
                 for (int t = 0; t < users[j].getfCount(); t++) {
-                    if (userFollowers[t] == name) {
+                    if (userFollowers[t].equals(name)) {
                         c++;
                         break;
                     }
@@ -170,14 +170,14 @@ public class Network {
 
             }
         }
-        return c; 
-}
+        return c;
+    }
 
     // Returns a textual description of all the users in this network, and who they
     // follow.
     public String toString() {
         //// Replace the following statement with your code
-        
+
         String ans = "Network:";
         for (int i = 0; i < userCount; i++) {
             ans = ans + users[i].toString() + " ";
