@@ -48,7 +48,6 @@ public class Network {
         }
         return null;
     }
-    
 
     /**
      * Adds a new user with the given name to this network.
@@ -80,14 +79,14 @@ public class Network {
      * or if the "follows" addition failed for some reason, returns false.
      */
     public boolean addFollowee(String name1, String name2) {
-        if (name1.toLowerCase().equals(name2.toLowerCase())) {
+        if (name1 == null || name2 == null || name1.equalsIgnoreCase(name2)) {
             return false;
         }
-        //// Replace the following statement with your code
+
         User user1 = getUser(name1);
         User user2 = getUser(name2);
 
-        if ((user1 != null) && (user2 != null)) {
+        if (user1 != null && user2 != null) {
             return user1.addFollowee(name2);
         }
 
@@ -125,42 +124,47 @@ public class Network {
      * The user who appears the most in the follow lists of all the users.
      */
     public String mostPopularUser() {
-        if (userCount==0) {
-            return "";
+        if (userCount == 0) {
+            return null;
         }
+
         int[] usersCount = new int[userCount];
-        
-        for (int i = 0; i < users.length; i++) {
-            String currentUser = users[i].getName();
+
+        for (int i = 0; i < userCount; i++) {
+            User currentUser = users[i];
             if (currentUser == null) {
-                continue; 
+                continue;
             }
+
+            String currentUserName = currentUser.getName();
             int c = 0;
+
             for (int j = 0; j < userCount; j++) {
                 if (i != j && users[j] != null) {
                     String[] userFollowers = users[j].getfFollows();
                     for (int t = 0; t < users[j].getfCount(); t++) {
-                        if (userFollowers[t] != null && userFollowers[t].equals(currentUser)) {
+                        if (userFollowers[t] != null && userFollowers[t].equals(currentUserName)) {
                             c++;
                             break;
                         }
                     }
-
                 }
             }
-            usersCount[i] = c;
 
+            usersCount[i] = c;
         }
+
         int maxIndex = -1;
         int maxC = 0;
+
         for (int i = 0; i < userCount; i++) {
             if (usersCount[i] > maxC) {
                 maxIndex = i;
                 maxC = usersCount[i];
-
             }
         }
-        return users[maxIndex].getName();
+
+        return (maxIndex != -1 && users[maxIndex] != null) ? users[maxIndex].getName() : null;
     }
 
     /**
@@ -188,14 +192,17 @@ public class Network {
     // Returns a textual description of all the users in this network, and who they
     // follow.
     public String toString() {
-        //// Replace the following statement with your code
+        if (userCount == 0) {
+            return "Network:";
+        }
 
-        String ans = "Network:\n";
+        String ans = "Network:";
         for (int i = 0; i < userCount; i++) {
-            if (users[i] != null) { 
-                ans = ans + users[i].toString() + "\n"; 
+            if (users[i] != null) {
+                ans += "\n" + users[i].toString();
             }
         }
         return ans;
     }
+
 }
