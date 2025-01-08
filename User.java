@@ -69,19 +69,16 @@ public class User {
      * does nothing and returns false;
      */
     public boolean addFollowee(String name) {
-        //// Replace the following statement with your code
-        int fCount = this.getfCount();
         if (fCount < maxfCount) {
-            if (this.follows(name) == false) {
-                follows[fCount] = name;
+            if (!follows(name)) {
+                follows[fCount] = name; 
                 fCount++;
-
+                return true;
             }
         }
-
-        return false;
+        return false; 
     }
-
+    
     /**
      * Removes the given name from the follows list of this user. If successful,
      * returns true.
