@@ -85,12 +85,15 @@ public class User {
      * If the name is not in the list, does nothing and returns false.
      */
     public boolean removeFollowee(String name) {
-        //// Replace the following statement with your code
+
+        if (name == null) {
+            return false; 
+        }
         if (this.follows(name) == true) {
             int foundIndex = -1;
             String[] follows = this.getfFollows();
             for (int i = 0; i < fCount; i++) {
-                if (follows[i].equals(name)) {
+                if (follows[i] != null && follows[i].equals(name)) {
                     foundIndex = i;
                     break;
                 }
@@ -131,8 +134,7 @@ public class User {
      * (if two users follow each other, they are said to be "friends.")
      */
     public boolean isFriendOf(User other) {
-        //// Replace the following statement with your code
-        return this.follows(other.getName());
+        return this.follows(other.getName()) && other.follows(this.getName());
     }
 
     /** Returns this user's name, and the names that s/he follows. */
